@@ -23,7 +23,7 @@ app.use(cors(corsOptions));
 app.use(express.json())
 
 
-app.get('/',(req,res) => {
+app.get('/test',(req,res) => {
     res.send('<h1>Api is working</h1>')
 })
 
