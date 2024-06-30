@@ -9,7 +9,7 @@ const port = 5000;
 const uri = process.env.MONGODBURI;
 
 const corsOptions = {
-    origin:'http://192.20.10.0:3000',
+    origin:'http://localhost:3000/',
     methods: 'GET,PUT,POST,DELETE',
     allowedHeaders:'Content-Type,Authorization'
 }
