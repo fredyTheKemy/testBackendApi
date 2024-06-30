@@ -17,12 +17,6 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 
-app.get('/test',(req,res) => {
-    res.send('<h1>Api is working</h1>')
-    let list = [{travel:'une semaine a paris'},{trqvel:'une semaine a paris'}]
-    res.json({list})
-})
-
 mongoose.connect(uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -42,23 +36,16 @@ let voyageShema = new mongoose.Schema({
 
 const Voyage = mongoose.model('voyage',voyageShema);
 
-async function saveTravel(){
-    const voyage1 = new Voyage({
-        titre:'une semaine a dubai',
-        description:'Voyagez dans l un des pays le plus beaux au monde',
-        urls:'https://res.cloudinary.com/dpistjmej/image/upload/f_auto,q_auto/lgl_ck1kvx//&&//https://res.cloudinary.com/dpistjmej/image/upload/f_auto,q_auto/cld-sample-5//&&//https://res.cloudinary.com/dpistjmej/image/upload/f_auto,q_auto/cld-sample-4'
-    });
+//app.use('/test',(req,res)=>{res.send('<h1>welcome home cocoApi<h1>')})
 
-    const voyage2 = new Voyage({
-        titre:'vacances de ski',
-        description:'vous allez adorer la montage ici',
-        urls:'https://res.cloudinary.com/dpistjmej/image/upload/f_auto,q_auto/lgl_ck1kvx//&&//https://res.cloudinary.com/dpistjmej/image/upload/f_auto,q_auto/cld-sample-5//&&//https://res.cloudinary.com/dpistjmej/image/upload/f_auto,q_auto/cld-sample-4'
-    });
-
-    await voyage1.save()
-    await voyage2.save()
-}
-
+app.get('/test', async (req,res) => {
+    try {
+        const result = await Voyage.find(); // Utilisation de await pour attendre la résolution de la promesse
+        res.send(result);
+    } catch (error) {
+        res.status(500).send({ message: 'Internal Server Error', error: error.message });
+    }
+})
 
 app.listen(port,()=>{
     console.log(`app is listening on port ${port}`)
